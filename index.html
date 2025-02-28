@@ -1,269 +1,86 @@
 <html>
   <style>
-    @import url(https://fonts.googleapis.com/css?family=Lato:700);
-
-// -- vars
-$bg-color: #34495e;
-$default-size: 1em;
-$label-font-size: $default-size / 4;
-$label-font-size-redo: $default-size * 4;
-
-// -- mixins
-@mixin size($width, $height) {
-  height: $height;
-  width: $width;
-}
-
-@mixin draw-progress($progress, $color) {
-  .pie {
-    .half-circle {
-      border-color: $color;
-    }
-
-    .left-side {
-      transform: rotate($progress * 3.6deg);
-    }
-
-    @if $progress <= 50 {
-      .right-side {
-        display: none;
-      }
-    } @else {
-      clip: rect(auto, auto, auto, auto);
-
-      .right-side {
-        transform: rotate(180deg);
-      }
-    }
-  }
-}
-
-@mixin draw-progress--solid($progress, $color, $bg-color) {
-  background: linear-gradient(to right, $color 50%, $bg-color 50%);
-  
-  &:before {
-    @if $progress <= 50 {
-      background: $bg-color;
-      transform: rotate((100 - (50 - $progress)) / 100 * 360deg * -1);
-    } @else {
-      background: $color;
-      transform: rotate((100 - $progress) / 100 * 360deg);
-    }
-  }
-}
-
-// -- selectors
-*,
-*:before,
-*:after {
+    * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-html,
+:root {
+  --progress-bar-width: 200px;
+  --progress-bar-height: 200px;
+  --font-size: 2rem;
+}
+
 body {
-  background: #ecf0f1;
-  color: #444;
-  font-family: 'Lato', Tahoma, Geneva, sans-serif;
-  font-size: 16px;
-  padding: 10px;
+  height: 100vh;
+  background-color: #100c08;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  place-items: center;
+  gap: 2rem;
 }
-
-.set-size {
-  font-size: 10em;
-}
-
-.charts-container {
-  &:after {
-    clear: both;
-    content: '';
-    display: table;
-  }
-}
-
-.pie-wrapper {
-  @include size($default-size, $default-size);
-  float: left;
-  margin: 15px;
-  position: relative;
-  
-  &:nth-child(3n + 1) {
-    clear: both;
-  }
-
-  .pie {
-    @include size(100%, 100%);
-    clip: rect(0, $default-size, $default-size, $default-size / 2);
-    left: 0;
-    position: absolute;
-    top: 0;
-
-    .half-circle {
-      @include size(100%, 100%);
-      border: ($default-size / 10) solid #3498db;
-      border-radius: 50%;
-      clip: rect(0, $default-size / 2, $default-size, 0);
-      left: 0;
-      position: absolute;
-      top: 0;
-    }
-  }
-
-  .label {
-    background: $bg-color;
-    border-radius: 50%;
-    bottom: $label-font-size-redo / 10;
-    color: #ecf0f1;
-    cursor: default;
-    display: block;
-    font-size: $label-font-size;
-    left: $label-font-size-redo / 10;
-    line-height: $label-font-size-redo * .70;
-    position: absolute;
-    right: $label-font-size-redo / 10;
-    text-align: center;
-    top: $label-font-size-redo / 10;
-
-    .smaller {
-      color: #bdc3c7;
-      font-size: .45em;
-      padding-bottom: 20px;
-      vertical-align: super;
-    }
-  }
-
-  .shadow {
-    @include size(100%, 100%);
-    border: $default-size / 10 solid #bdc3c7;
-    border-radius: 50%;
-  }
-
-  &.style-2 {
-    .label {
-      background: none;
-      color: #7f8c8d;
-
-      .smaller {
-        color: #bdc3c7;
-      }
-    }
-  }
-
-  &.progress-30 {
-    @include draw-progress(30, #3498db);
-  }
-
-  &.progress-60 {
-    @include draw-progress(60, #9b59b6);
-  }
-
-  &.progress-90 {
-    @include draw-progress(90, #e67e22);
-  }
-
-  &.progress-45 {
-    @include draw-progress(45, #1abc9c);
-  }
-
-  &.progress-75 {
-    @include draw-progress(75, #8e44ad);
-  }
-
-  &.progress-95 {
-    @include draw-progress(95, #e74c3c);
-  }
-}
-
-.pie-wrapper--solid {
+.circular-progress {
+  width: var(--progress-bar-width);
+  height: var(--progress-bar-height);
   border-radius: 50%;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inner-circle {
+  position: absolute;
+  width: calc(var(--progress-bar-width) - 30px);
+  height: calc(var(--progress-bar-height) - 30px);
+  border-radius: 50%;
+  background-color: lightgrey;
+}
 
-  &:before {
-    border-radius: 0 100% 100% 0 / 50%;
-    content: '';
-    display: block;
-    height: 100%;
-    margin-left: 50%;
-    transform-origin: left;
-  }
-  
-  .label {
-    background: transparent;
-  }
-  
-  &.progress-65 {
-    @include draw-progress--solid(65, #e67e22, $bg-color);
-  }
-  
-  &.progress-25 {
-    @include draw-progress--solid(25, #9b59b6, $bg-color);
-  }
-  
-  &.progress-88 {
-    @include draw-progress--solid(88, #3498db, $bg-color);
+.percentage {
+  position: relative;
+  font-size: var(--font-size);
+  color: rgb(0, 0, 0, 0.8);
+}
+
+@media screen and (max-width: 800px) {
+  :root {
+    --progress-bar-width: 150px;
+    --progress-bar-height: 150px;
+    --font-size: 1.3rem;
   }
 }
 
-  </style><div class="set-size charts-container">
-  <div class="pie-wrapper progress-30">
-    <span class="label">30<span class="smaller">%</span></span>
-    <div class="pie">
-      <div class="left-side half-circle"></div>
-      <div class="right-side half-circle"></div>
-    </div>
-  </div>
+@media screen and (max-width: 500px) {
+  :root {
+    --progress-bar-width: 120px;
+    --progress-bar-height: 120px;
+    --font-size: 1rem;
+  }
+}
+  </style>
 
-  <div class="pie-wrapper progress-60">
-    <span class="label">60<span class="smaller">%</span></span>
-    <div class="pie">
-      <div class="left-side half-circle"></div>
-      <div class="right-side half-circle"></div>
-    </div>
-  </div>
-
-  <div class="pie-wrapper progress-90">
-    <span class="label">90<span class="smaller">%</span></span>
-    <div class="pie">
-      <div class="left-side half-circle"></div>
-      <div class="right-side half-circle"></div>
-    </div>
-  </div>
-
-  <div class="pie-wrapper progress-45 style-2">
-    <span class="label">45<span class="smaller">%</span></span>
-    <div class="pie">
-      <div class="left-side half-circle"></div>
-      <div class="right-side half-circle"></div>
-    </div>
-    <div class="shadow"></div>
-  </div>
-
-  <div class="pie-wrapper progress-75 style-2">
-    <span class="label">75<span class="smaller">%</span></span>
-    <div class="pie">
-      <div class="left-side half-circle"></div>
-      <div class="right-side half-circle"></div>
-    </div>
-    <div class="shadow"></div>
-  </div>
-
-  <div class="pie-wrapper progress-95 style-2">
-    <span class="label">95<span class="smaller">%</span></span>
-    <div class="pie">
-      <div class="left-side half-circle"></div>
-      <div class="right-side half-circle"></div>
-    </div>
-    <div class="shadow"></div>
+  <div class="circular-progress" data-inner-circle-color="lightgrey" data-percentage="80" data-progress-color="crimson" data-bg-color="black">
+    <div class="inner-circle"></div>
+    <p class="percentage">0%</p>
   </div>
   
-  <div class="pie-wrapper pie-wrapper--solid progress-65">
-    <span class="label">65<span class="smaller">%</span></span>
+  <div class="circular-progress" data-inner-circle-color="white" data-percentage="70" data-progress-color="rebeccapurple" data-bg-color="violet">
+    <div class="inner-circle"></div>
+    <p class="percentage">0%</p>
   </div>
   
-  <div class="pie-wrapper pie-wrapper--solid progress-25">
-    <span class="label">25<span class="smaller">%</span></span>
+  <div class="circular-progress" data-inner-circle-color="lime" data-percentage="100" data-progress-color="green" data-bg-color="lightgrey">
+    <div class="inner-circle"></div>
+    <p class="percentage">0%</p>
   </div>
   
-  <div class="pie-wrapper pie-wrapper--solid progress-88">
-    <span class="label">88<span class="smaller">%</span></span>
+  <div class="circular-progress" data-inner-circle-color="cyan" data-percentage="60" data-progress-color="blue" data-bg-color="skyblue">
+    <div class="inner-circle"></div>
+    <p class="percentage">0%</p>
   </div>
-</div></html>
+  
+  <div class="circular-progress" data-inner-circle-color="black" data-percentage="85" data-progress-color="white" data-bg-color="grey">
+    <div class="inner-circle"></div>
+    <p class="percentage">0%</p>
+  </div>
+</html>

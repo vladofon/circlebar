@@ -15,7 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   min-heihgt: 100vh;
-  background: #222;
+  background: white;
 }
 
 .container {
@@ -33,7 +33,7 @@ body {
   height: 150px;
   border-radius: 50%;
   color: white;
-  background: #444 linear-gradient(to right, transparent, 50%, var(--clr) 0);
+  background: slategrey linear-gradient(to right, transparent, 50%, var(--clr) 0);
 }
 
 .container .progress h3{
@@ -73,7 +73,7 @@ body {
 
 .container .progress::after {
   content: '';
-  background: #222;
+  background: white;
   position: absolute;
   inset: 10px;
   border-radius: 50%;

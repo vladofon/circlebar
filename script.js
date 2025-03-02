@@ -4,7 +4,7 @@ let total = parseInt(params.get("total"), 10);
 let used = parseInt(params.get("used"), 10);
 
 var content = Math.ceil(used * 100 / total);
-var contentString = '<div>' + content + '</div><span>%</span>'
+var contentString = content + '<span>%</span>'
 
 console.log(contentString);
 

@@ -4,7 +4,7 @@ let total = parseInt(params.get("total"), 10);
 let used = parseInt(params.get("used"), 10);
 
 var content = Math.ceil(used * 100 / total);
-var contentString = '' + content + '<span>%</span>'
+var contentString = '<div>' + content + '</div><span>%</span>'
 document.getElementById("progress-content").innerHtml = contentString;
 document.getElementById("project").textContent = project;
 

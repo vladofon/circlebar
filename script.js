@@ -8,9 +8,9 @@ var contentString = '<div>' + content + '</div><span>%</span>'
 
 console.log(contentString);
 
-document.getElementById("progress-content").innerHtml = contentString;
+document.getElementById("progress-content").innerHTML = contentString;
 
-console.log(document.getElementById("progress-content").innerHtml);
+console.log(document.getElementById("progress-content").innerHTML);
 
 document.getElementById("project").textContent = project;
 

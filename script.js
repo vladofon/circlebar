@@ -5,7 +5,13 @@ let used = parseInt(params.get("used"), 10);
 
 var content = Math.ceil(used * 100 / total);
 var contentString = '<div>' + content + '</div><span>%</span>'
+
+console.log(contentString);
+
 document.getElementById("progress-content").innerHtml = contentString;
+
+console.log(document.getElementById("progress-content").innerHtml);
+
 document.getElementById("project").textContent = project;
 
 if(content <= 50) {
@@ -14,5 +20,3 @@ if(content <= 50) {
 }
 console.log(content)
 document.documentElement.style.setProperty('--i', content);
-
-console.log(style.getPropertyValue('--i'))
